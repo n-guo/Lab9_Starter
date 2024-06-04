@@ -47,6 +47,14 @@
       width: 122px;
     }
   </style>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "4db4f70688794a92be58c52821fa1fef"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                          
 </head>
 
 <body>
@@ -69,22 +77,22 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
-    </section>
+      <button id="log">Console Log</button>
+      <button id="error">Console Error</button>
+      <button id="count">Console Count</button>
+      <button id="warn">Console Warn</button>
+      <button id="assert">Console Assert</button>
+      <button id="clear">Console Clear</button>
+      <button id="dir">Console Dir</button>
+      <button id="dirxml">Console dirxml</button>
+      <button id="groupStart">Console Group Start</button>
+      <button id="groupEnd">Console Group End</button>
+      <button id="table">Console Table</button>
+      <button id="startTimer">Start Timer</button>
+      <button id="endTimer">End Timer</button>
+      <button id="trace">Console Trace</button>
+      <button id="triggerError">Trigger a Global Error</button>
+  </section>
   </main>
 
   <script>
@@ -102,6 +110,93 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    document.getElementById('log').addEventListener('click', () => {
+      console.log('Console log');
+    });
+
+    document.getElementById('error').addEventListener('click', () => {
+      console.error('Console error');
+    });
+
+    document.getElementById('count').addEventListener('click', () => {
+      console.count('Count button');
+    });
+
+    document.getElementById('warn').addEventListener('click', () => {
+      console.warn('Console warn');
+    });
+
+    document.getElementById('assert').addEventListener('click', () => {
+      console.assert(3 === 5, 'Console assert');
+    });
+
+    document.getElementById('clear').addEventListener('click', () => {
+      console.clear();
+    });
+
+    document.getElementById('dir').addEventListener('click', () => {
+      console.dir([1,2,3]);
+    });
+
+    document.getElementById('dirxml').addEventListener('click', () => {
+      console.dirxml(document.body);
+    });
+
+    document.getElementById('groupStart').addEventListener('click', () => {
+      console.group('Group');
+    });
+
+    document.getElementById('groupEnd').addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+    document.getElementById('table').addEventListener('click', () => {
+      console.table([{ name: 'Fist Row', row: 1 }, { name: 'Second Row', row: 2 }]);
+    });
+
+    document.getElementById('startTimer').addEventListener('click', () => {
+      console.time('Timer');
+    });
+
+    document.getElementById('endTimer').addEventListener('click', () => {
+      console.timeEnd('Timer');
+    });
+
+    document.getElementById('trace').addEventListener('click', () => {
+      function traceExample() {
+        function nestedFunction() {
+          console.trace('Trace example');
+        }
+        nestedFunction();
+      }
+      traceExample();
+    });
+
+    class ValidationError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "ValidationError";
+      }
+    }
+
+    function test() {
+      throw new ValidationError("Whoops!");
+    }
+
+    document.getElementById('triggerError').addEventListener('click', () => {
+      // incorrect selector for second num
+      try {
+        let firstNum = document.querySelector('#first-num');
+        let secondNum = document.querySelector('second-num');
+        secondNum.value = '2';
+      } catch (error) {
+        console.error(error);
+        test()
+      } finally {
+        console.log('Error triggered.');
+      }
+    });
+
   </script>
 </body>
 
